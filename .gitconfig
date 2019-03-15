@@ -1,8 +1,8 @@
 [user]
-	name = kainlite
-	email = kainlite@gmail.com
+  name = kainlite
+  email = kainlite@gmail.com
   username = kainlite
-	signingkey = 37757CCF
+  signingkey = 37757CCF
 [diff]
 [color]
   ui = auto
@@ -22,7 +22,6 @@
   b = branch
   ds = diff --stat=160,120
   dh1 = diff HEAD~1
-
   head = !git l -1
   h = !git head
   r = !git l -30
@@ -49,4 +48,4 @@
 [gist]
   username = kainlite
 [url "git@bitbucket.org:"]
-	insteadOf = https://bitbucket.org/
+  insteadOf = https://bitbucket.org/
