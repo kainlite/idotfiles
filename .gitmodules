@@ -1,0 +1,18 @@
+[submodule ".rbenv"]
+	path = .rbenv
+	url = https://github.com/sstephenson/rbenv.git
+[submodule ".pyenv"]
+	path = .pyenv
+	url = https://github.com/yyuu/pyenv.git
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule ".nvm"]
+	path = .nvm
+	url = https://github.com/creationix/nvm.git
+[submodule ".exenv"]
+	path = .exenv
+	url = https://github.com/mururu/exenv.git
+[submodule ".evm"]
+	path = .evm
+	url = https://github.com/robisonsantos/evm

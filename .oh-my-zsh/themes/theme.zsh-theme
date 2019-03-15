@@ -1,0 +1,1 @@
+/Users/gabrielgarrido/.dotfiles/theme.zsh-theme

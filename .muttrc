@@ -1,0 +1,198 @@
+# Example .passwd.gpg
+# set my_gpass1="Your Ultra secure password"
+# EOF
+#
+# exec: gpg -o .passwd.gpg -e .passwd
+# remove .passwd file for security reasons
+#
+# Example ~/.mutt/.mail
+# account-hook        "imaps://user@imap.gmail.com/" "\
+#    set imap_user   = user@gmail.com \
+#        imap_pass   = $my_gpass1"
+#
+#set folder          = imaps://user@imap.gmail.com/
+#mailboxes           = +INBOX =[Gmail]/Drafts =[Gmail]/'Sent Mail' =[Gmail]/Spam =[Gmail]/Trash =[Gmail]/'Trabajo-rails'
+#set spoolfile       = +INBOX
+#folder-hook         imaps://user@imap.gmail.com/ "\
+#    set folder      = imaps://user@imap.gmail.com/ \
+#        spoolfile   = +INBOX \
+#        postponed   = +[Gmail]/Drafts \
+#        record      = +[Gmail]/'Sent Mail' \
+#        from        = 'User <user@gmail.com> ' \
+#        realname    = 'User' \
+#        smtp_url    = smtps://user@smtp.gmail.com:465 \
+#        smtp_pass   = $my_gpass1"
+# EOF
+#
+# Pray to the gods of mutt.
+# Side comment, if you hace special chars in your password, you'll suffer, you've been advised
+
+#-----------#
+# Passwords #
+#-----------#
+source "gpg -d ~/.mutt/.passwd.gpg |"
+
+#---------------#
+# Account Hooks #
+#---------------#
+account-hook . "unset imap_user; unset imap_pass; unset tunnel"
+#-------------------------------------#
+# Folders, mailboxes and folder hooks #
+#-------------------------------------#
+# Setup for user1:
+source ~/.mutt/.kainlite
+
+# This should be ' »›-‹L' to match Gmail, but $to_chars breaks on unicode.
+set to_chars    = ' +>-<L'
+# Don't move read mail.
+set move = no
+
+# Auto-delete marked messages
+set delete = yes
+
+# imap folders/labels
+set imap_check_subscribed=yes
+
+# for posponed messages
+set recall = yes
+
+# I don't want to print, save the trees!
+set print = no
+
+# Include original message in reply
+set include = yes
+
+# Disabling "press any key"
+set wait_key = no
+
+# View URLs inside Mutt
+macro index \cb   "|urlview\n"
+macro pager \cb   "|urlview\n"
+
+# View attachments
+set mailcap_path     = ~/.mutt/mailcap       # entries for filetypes
+bind attach <return> view-mailcap
+
+# Cache
+set header_cache  = ~/.mutt/cache/headers
+set message_cachedir  = ~/.mutt/cache/bodies
+set certificate_file  = ~/.mutt/certificates
+
+# Sign mails
+source ~/.mutt/gpg.rc 
+set crypt_autosign = no
+
+#--------#
+# Macros #
+#--------#
+ 
+# Gmail style keybindings
+bind  editor <space> noop
+bind  index,pager c  mail     #Compose
+macro index,pager e  "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive conversation"
+bind  generic     x  tag-entry    #Select Conversation
+bind  index       x  tag-thread   #Select Conversation
+bind  pager       x  tag-message  #Select Conversation
+bind  index,pager s  flag-message #Star a message
+macro index,pager +  <save-message>=[Gmail]/Important<enter><enter> "Mark as important"
+macro index,pager !  <save-message>=[Gmail]/Spam<enter><enter> "Report spam"
+bind  index,pager a  group-reply  #Reply all
+bind  index,pager \# delete-thread  #Delete
+bind  index,pager l  copy-message #Label
+# bind  index,pager v  save-message #Move to
+macro index,pager I  <set-flag>O  "Mark as read"
+macro index,pager U  <clear-flag>O  "Mark as unread"
+macro index,pager ga "<change-folder>=[Gmail]/All Mail<enter>"  "Go to all mail"
+macro index,pager gs <change-folder>=[Gmail]/Starred<enter> "Go to 'Starred'"
+macro index,pager gd <change-folder>=[Gmail]/Drafts<enter>  "Go to 'Drafts'"
+macro index,pager gl <change-folder>?       "Go to 'Label'"
+macro index,pager gi <change-folder>=INBOX<enter>     "Go to inbox"
+macro index,pager gt "<change-folder>=[Gmail]/Sent Mail<enter>" "Go to 'Sent Mail'"
+folder-hook +INBOX 'macro index,pager y "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive conversation"'
+folder-hook +[Gmail]/Trash macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
+folder-hook +[Gmail]/Starred bind  index,pager y flag-message #"Toggle star"
+macro index,pager o "<next-unread><enter>"
+
+
+# Index View Options ---------------------------------
+set date_format = "%m/%d"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set sort = threads                         # like gmail
+set sort_aux = reverse-last-date-received  # like gmail
+set uncollapse_jump                        # don't collapse on an unread message
+set sort_re                                # thread based on regex
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+# Index Key Bindings ---------------------------------
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index i        imap-fetch-mail
+
+bind index R        group-reply
+# bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# Ctrl-R to mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# Sync email
+# macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+# macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+
+# Saner copy/move dialogs
+macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+
+# Sidebar Navigation ---------------------------------
+# bind index,pager <down>   sidebar-next
+# bind index,pager <up>     sidebar-prev
+# bind index,pager <right>  sidebar-open
+
+# Pager View Options ---------------------------------
+set pager_index_lines = 10 # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+alternative_order text/plain text/enriched text/html
+
+# Pager Key Bindings ---------------------------------
+bind pager k  previous-line
+bind pager j  next-line
+bind pager gg top
+bind pager G  bottom
+
+bind pager R  group-reply
+
+# View attachments properly.
+bind attach <return> view-mailcap
+
+#-------------------------#
+# Misc. optional settings #
+#-------------------------#
+# Check for mail every minute for current IMAP mailbox every 1 min
+set timeout         = 60
+# Check for new mail in ALL mailboxes every 2 min
+set mail_check      = 120
+# keep imap connection alive by polling intermittently (time in seconds)
+set imap_keepalive  = 300
+# allow mutt to open new imap connection automatically
+unset imap_passive
+# store message headers locally to speed things up
+# (the ~/.mutt folder MUST exist! Arch does not create it by default)
+set header_cache    = ~/.mutt/hcache
+# sort mail by threads
+set sort            = threads
+# and sort threads by date
+set sort_aux        = last-date-received
+
+set sendmail="/usr/bin/esmtp"
+set envelope_from=yes
+set from="Gabriel Garrido <kainlite@gmail.com>"
+set use_from=yes
+set edit_headers=yes
+
