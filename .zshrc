@@ -94,7 +94,7 @@ set -g xterm-keys on
 # export TERM=tmux-256color
 # export ZSH_TMUX_TERM=tmux-256color
 # set -g default-terminal "tmux-256color"
-ZSH_TMUX_AUTOSTART="false"
+ZSH_TMUX_AUTOSTART="true"
 
 function up()
 {
@@ -176,9 +176,9 @@ bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
 
 # GBT magic
-alias docker='gbt_docker'
-alias su='gbt_su'
-alias vagrant='gbt_vagrant'
+# alias docker='gbt_docker'
+# alias su='gbt_su'
+# alias vagrant='gbt_vagrant'
 
 # GBT Configuration
 export GBT_CAR_DIR_FG='40;40;40'
@@ -188,3 +188,13 @@ export GBT_CAR_FG='250;189;47'
 export GBT_CAR_OS_DISPLAY=0
 export GBT_CAR_STATUS_DISPLAY=0
 export GBT_CAR_DIR_DEPTH='9999'
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh
