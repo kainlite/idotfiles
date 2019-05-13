@@ -253,6 +253,7 @@ function! <SID>StripTrailingWhitespaces()
     " Clean up: restore previous search history, and cursor position
     let @/=_s
     call cursor(l, c)
+    retab
 endfunction
 
 map <leader>r :NERDTree<cr>
