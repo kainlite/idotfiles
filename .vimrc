@@ -155,7 +155,7 @@ augroup vimrcEx
     autocmd FileType text setlocal textwidth=78
 
     "for ruby, autoindent with two spaces, always expand tabs
-    autocmd FileType rb,ruby,haml,eruby,yaml,html,tmpl,javascript,sass,cucumber,js,jsx,ex,eex set ai sw=4 sts=4 et
+    autocmd FileType rb,ruby,haml,eruby,yml,yaml,html,tmpl,javascript,sass,cucumber,js,jsx,ex,eex set ai sw=2 sts=2 et
     autocmd FileType c,cpp set ai tabstop=4 softtabstop=4 shiftwidth=4 et
     autocmd FileType python set sw=4 sts=4 et
     autocmd Filetype prolog set syntax=prolog et
