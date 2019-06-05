@@ -90,6 +90,7 @@ set hlsearch
 set number
 set nobomb
 set nofoldenable
+set nomodeline
 
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase

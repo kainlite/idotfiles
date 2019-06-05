@@ -49,3 +49,5 @@
   username = kainlite
 [url "git@bitbucket.org:"]
   insteadOf = https://bitbucket.org/
+[diff "sopsdiffer"]
+	textconv = sops -d

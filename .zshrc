@@ -198,3 +198,9 @@ export GBT_CAR_DIR_DEPTH='9999'
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/gabrielgarrido/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gabrielgarrido/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/gabrielgarrido/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/gabrielgarrido/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
